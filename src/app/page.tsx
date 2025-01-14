@@ -208,8 +208,6 @@ function Interest(props) {
 }
 
 function ExperienceSection() {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-
   return (
     <div className="bg-gray-900 p-10 rounded-3xl mt-10">
       <h2 className="text-2xl md:text-3xl font-medium">My Experience</h2>
