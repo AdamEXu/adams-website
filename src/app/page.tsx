@@ -1,101 +1,360 @@
-import Image from "next/image";
+"use client";
+
+import { ReactLenis, useLenis } from "lenis/react";
+import {
+  motion,
+  useTransform,
+  useScroll,
+  easeOut,
+  easeIn,
+  AnimatePresence,
+  useAnimation,
+} from "motion/react";
+import { useRef, useState, useEffect } from "react";
+import Link from "next/link";
+import PageTransition from "@/components/PageTransition";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const containerRef = useRef(null);
+  const [showFront, setShowFront] = useState(true);
+  const [showNav, setShowNav] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "100vh start"],
+  });
+
+  const frontScale = useTransform(scrollYProgress, [0, 0.7], [1, 8], {
+    ease: easeIn,
+  });
+  const frontOpacity = useTransform(scrollYProgress, [0.65, 0.7], [1, 0]);
+  const backOpacity = useTransform(scrollYProgress, [0.7, 0.85], [0, 1], {
+    ease: easeOut,
+  });
+  const navOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.onChange((latest) => {
+      setShowFront(latest < 0.7);
+      setShowNav(latest < 0.15); // Hide nav when scroll progress is 15% or more
+    });
+
+    return () => unsubscribe();
+  }, [scrollYProgress]);
+
+  useEffect(() => {
+    // Force show front on initial load
+    setShowFront(true);
+
+    // Hide front if page is loaded scrolled down
+    const timer = setTimeout(() => {
+      setShowFront(scrollYProgress.get() < 0.7);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const lenis = useLenis(() => {});
+
+  return (
+    <ReactLenis root>
+      <AnimatePresence>
+        {showNav && (
+          <motion.div
+            className="fixed z-20 top-[60vh] w-screen flex flex-row justify-center gap-8 text-lg"
+            style={{ opacity: navOpacity }}
+            initial={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <span className="cursor-pointer underline underline-offset-2 font-bold">
+              About Me
+            </span>
+            <Link
+              href="/blog"
+              className="opacity-80 hover:opacity-100 hover:scale-110 transition-transform duration-300 ease-in-out cursor-pointer"
+            >
+              Blog
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div ref={containerRef} className="h-[100vh]">
+        <AnimatePresence>
+          {showFront && (
+            <motion.div
+              id="front"
+              className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 z-10 bg-gray-900"
+              style={{ scale: frontScale, opacity: frontOpacity }}
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.svg
+                width="100%"
+                height="100%"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="xMidYMid meet"
+                style={{ scale: frontScale }}
+              >
+                <motion.text
+                  x="50"
+                  y="50"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontWeight="bold"
+                >
+                  Hi, I'm Adam.
+                </motion.text>
+              </motion.svg>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      <motion.div
+        id="back"
+        className="w-screen min-h-screen px-8 relative z-0"
+        style={{ opacity: backOpacity }}
+      >
+        <div className="max-w-4xl mx-auto pt-24 px-4">
+          <div className="mx\-8">
+            <p className="text-4xl md:text-6xl font-bold py-6">
+              My name is Adam Xu.
+            </p>
+            <p className="text-xl md:text-3xl font-medium py-2">
+              Welcome to my website on the world wide web.
+            </p>
+            <p className="text-xl md:text-3xl font-light py-2">
+              I'm a high schooler based in the Bay Area.
+            </p>
+          </div>
+          <span className="block py-4" />
+          <div className="bg-gray-900 p-10 rounded-3xl">
+            <h2 className="text-2xl md:text-3xl font-medium">My Interests</h2>
+            <div>
+              <div className="flex flex-col md:flex-row justify-center gap-4">
+                <Interest
+                  title="Programming"
+                  desc="I have been coding for over five years, and I work on a lot of random projects in my free time. "
+                  img="/terminal.svg"
+                  bg="#228833"
+                  fg="#99ffaa"
+                />
+                <Interest
+                  title="Video Production"
+                  desc="My skills mostly fall into video editing, but I also have experience all around the production process."
+                  img="/camera.svg"
+                  bg="#2233aa"
+                  fg="#99bbff"
+                />
+                {/* <Interest
+                  title="Title"
+                  desc="Description text, blah blah blah."
+                  img="/terminal.svg"
+                  bg="#aa2222"
+                  fg="#ffaa99"
+                /> */}
+              </div>
+            </div>
+          </div>
+          <ExperienceSection />
+          <span className="block py-4" />
+          <div className="bg-gray-900 p-10 rounded-3xl">
+            <h2 className="text-2xl md:text-3xl font-medium pb-4">
+              Contact me!
+            </h2>
+            <p>
+              My email is{" "}
+              <a className="font-bold opacity-70">click to reveal</a>
+            </p>
+          </div>
+          <span className="block py-4" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </motion.div>
+    </ReactLenis>
+  );
+}
+
+function Interest(props) {
+  return (
+    <div
+      className="w-full md:w-1/2 px-4 py-8 mt-4 rounded-xl h-70 md:h-80"
+      style={{ backgroundColor: props.bg }}
+    >
+      <div
+        className="w-1/2"
+        style={{
+          maskImage: `url(${props.img})`,
+          WebkitMaskImage: `url(${props.img})`,
+          maskSize: "contain",
+          WebkitMaskSize: "contain",
+          maskRepeat: "no-repeat",
+          WebkitMaskRepeat: "no-repeat",
+          backgroundColor: props.fg,
+          height: "100px", // Adjust this value as needed
+        }}
+      />
+      <h2
+        className="text-2xl md:text-3xl font-bold pt-4"
+        style={{ color: props.fg }}
+      >
+        {props.title}
+      </h2>
+      <p className="text-lg md:text-xl mt-2" style={{ color: props.fg }}>
+        {props.desc}
+      </p>
     </div>
+  );
+}
+
+function ExperienceSection() {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  const toggleExpand = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  return (
+    <div className="bg-gray-900 p-10 rounded-3xl mt-10">
+      <h2 className="text-2xl md:text-3xl font-medium">My Experience</h2>
+      <div className="flex flex-col md:flex-row justify-center gap-4">
+        <div className="pb-4 w-full md:w-1/2">
+          <Experience
+            title="Web Dev"
+            desc="I know plain HTML, CSS, and Javascript, as well as Flask to build backends and NextJS + React + Tailwind to build frontends."
+            img="/safari.svg"
+            bg="#2233aa"
+            fg="#99bbff"
+          />
+          <Experience
+            title="AI"
+            desc="I have worked on creating AI chatbots for different purposes using a variety of techniques such as prompting and RAG."
+            img="/cpu.svg"
+            bg="#aa2222"
+            fg="#ffaa99"
+          />
+        </div>
+        <div className="w-full md:w-1/2">
+          <Experience
+            title="Video Editing"
+            desc="I use Final Cut Pro for most of my editing. I occasionally use Premiere Pro along with After Effects for more complex projects."
+            img="/selection.pin.in.out.svg"
+            bg="#228833"
+            fg="#99ffaa"
+          />
+          <Experience
+            title="First Place"
+            desc="In the Student Television Network Spring Nationals 2024 competition, I represented my school and won first place in the Commercial category."
+            img="/trophy.svg"
+            bg="#bb8800"
+            fg="#ffee77"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Experience({ title, desc, img, bg, fg }) {
+  const contentRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const controls = useAnimation();
+
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+    setIsExpanded(!isOpen);
+    if (!isOpen && contentRef.current) {
+      controls.start({
+        height: contentRef.current.scrollHeight + 60,
+        backgroundColor: adjustBrightness(bg, 20),
+      });
+    } else {
+      controls.start({
+        height: 100,
+        backgroundColor: bg,
+      });
+    }
+  };
+
+  const handleHoverStart = () => {
+    if (!isOpen && contentRef.current) {
+      setIsExpanded(true);
+      controls.start({
+        height: contentRef.current.scrollHeight + 55,
+        // backgroundColor: adjustBrightness(bg, 20),
+      });
+    }
+  };
+
+  const handleHoverEnd = () => {
+    if (!isOpen) {
+      setIsExpanded(false);
+      controls.start({
+        height: 100,
+        backgroundColor: bg,
+      });
+    }
+  };
+
+  // Utility function to adjust color brightness
+  const adjustBrightness = (color: string, amount: number) => {
+    const hex = color.replace("#", "");
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+
+    const adjustedR = Math.min(255, Math.max(0, r + amount));
+    const adjustedG = Math.min(255, Math.max(0, g + amount));
+    const adjustedB = Math.min(255, Math.max(0, b + amount));
+
+    return `#${adjustedR.toString(16).padStart(2, "0")}${adjustedG
+      .toString(16)
+      .padStart(2, "0")}${adjustedB.toString(16).padStart(2, "0")}`;
+  };
+
+  return (
+    <motion.div
+      className="w-full px-4 py-8 mt-4 rounded-xl overflow-hidden cursor-pointer"
+      style={{ backgroundColor: bg }}
+      animate={controls}
+      initial={{ height: 100 }}
+      onClick={handleClick}
+      onHoverStart={handleHoverStart}
+      onHoverEnd={handleHoverEnd}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+    >
+      <div ref={contentRef}>
+        <div className="flex items-center gap-4 mb-8">
+          <div
+            className="flex-shrink-0"
+            style={{
+              maskImage: `url(${img})`,
+              WebkitMaskImage: `url(${img})`,
+              maskSize: "contain",
+              WebkitMaskSize: "contain",
+              maskRepeat: "no-repeat",
+              WebkitMaskRepeat: "no-repeat",
+              backgroundColor: fg,
+              width: "40px",
+              aspectRatio: "1 / 1",
+            }}
+          />
+          <h2 className="text-xl md:text-3xl font-bold" style={{ color: fg }}>
+            {title}
+          </h2>
+        </div>
+        <motion.p
+          className="text-lg md:text-xl mt-4"
+          style={{ color: "#fff" }}
+          animate={{
+            opacity: isOpen || isExpanded ? 1 : 0.5,
+          }}
+        >
+          {desc}
+        </motion.p>
+      </div>
+    </motion.div>
   );
 }

@@ -1,0 +1,139 @@
+article p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article h2 {
+  font-size: 1.75rem;
+  font-weight: medium;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article h3 {
+  font-size: 1.5rem;
+  font-weight: medium;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article h4 {
+  font-size: 1.25rem;
+  font-weight: medium;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article h5 {
+  font-size: 1rem;
+  font-weight: medium;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article h6 {
+  font-size: 0.875rem;
+  font-weight: light;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article ol ol {
+  list-style-type: lower-alpha;
+}
+
+article ol ol ol {
+  list-style-type: lower-roman;
+}
+
+article blockquote {
+  border-left: 0.25rem solid #ffffff;
+  padding-left: 1rem;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article img {
+  max-width: 100%;
+  max-height: 40vh;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  outline: solid 2px #ffffff;
+}
+
+article pre {
+  background-color: #212936;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+article hr {
+  border: none;
+  border-top: 0.1rem solid #ffffff;
+  opacity: 0.5;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+article a {
+  color: #ddeeff;
+  text-decoration: underline;
+}
+
+article a:hover {
+  color: #ffffff;
+}
+
+article code {
+  background-color: #212936;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+article table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  /* border: 1px solid #ffffff; */
+}
+
+article th {
+  text-align: left;
+  padding: 0.5rem;
+  background-color: #212936;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+article td {
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}

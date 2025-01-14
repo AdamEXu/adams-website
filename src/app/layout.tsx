@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Inter } from "next/font/google";
+import { AnimatePresence } from "motion/react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  fallback: ["system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -19,15 +19,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body>
+        <AnimatePresence mode="wait">{children}</AnimatePresence>
       </body>
     </html>
   );

@@ -11,6 +11,13 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        blue: {
+          ...require("tailwindcss/colors").blue,
+          990: "#050820",
+        },
+      },
+      scale: {
+        "101": "1.01",
       },
     },
   },
