@@ -175,7 +175,15 @@ export default function Home() {
   );
 }
 
-function Interest(props) {
+interface InterestProps {
+  title: string;
+  desc: string;
+  img: string;
+  bg: string;
+  fg: string;
+}
+
+function Interest(props: InterestProps) {
   return (
     <div
       className="w-full md:w-1/2 px-4 py-8 mt-4 rounded-xl h-70 md:h-80"
@@ -191,18 +199,13 @@ function Interest(props) {
           maskRepeat: "no-repeat",
           WebkitMaskRepeat: "no-repeat",
           backgroundColor: props.fg,
-          height: "100px", // Adjust this value as needed
+          height: "100px",
         }}
       />
-      <h2
-        className="text-2xl md:text-3xl font-bold pt-4"
-        style={{ color: props.fg }}
-      >
+      <h2 className="text-2xl font-bold mt-4" style={{ color: props.fg }}>
         {props.title}
       </h2>
-      <p className="text-lg md:text-xl mt-2" style={{ color: props.fg }}>
-        {props.desc}
-      </p>
+      <p className="mt-4 text-white opacity-90">{props.desc}</p>
     </div>
   );
 }
