@@ -14,11 +14,8 @@ export default function Blog() {
       </header>
       <main>
         {posts.map((post) => (
-          <Link href={`/blog/${post.slug}`}>
-            <div
-              key={post.slug}
-              className="mb-8 bg-gray-800 p-4 rounded-lg hover:scale-101 hover:shadow-lg hover:bg-gray-700 transition-all duration-300 ease-in-out flex justify-between items-center gap-4"
-            >
+          <Link key={post.slug} href={`/blog/${post.slug}`}>
+            <div className="mb-8 bg-gray-800 p-4 rounded-lg hover:scale-101 hover:shadow-lg hover:bg-gray-700 transition-all duration-300 ease-in-out flex justify-between items-center gap-4">
               <div>
                 <h2 className="text-2xl font-semibold mb-2">{post.title}</h2>
                 {post.description && (
