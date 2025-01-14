@@ -13,9 +13,17 @@ interface PostProps {
   }>;
 }
 
+interface PostData {
+  slug: string;
+  title: string;
+  date: string;
+  contentHtml: string;
+  description?: string;
+}
+
 export default async function Post(props: PostProps) {
   const params = await props.params;
-  const postData = await getPostData(params.slug);
+  const postData: PostData = await getPostData(params.slug);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
@@ -29,12 +37,11 @@ export default async function Post(props: PostProps) {
             year: "numeric",
             month: "long",
             day: "numeric",
-          })}{" "}
-          • Adam Xu
+          })}
         </p>
-        <hr />
+        <hr className="border-gray-700 mb-8" />
         <div
-          className="prose prose-invert"
+          className="prose prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
         />
       </article>

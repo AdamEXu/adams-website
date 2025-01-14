@@ -237,7 +237,7 @@ function ExperienceSection() {
             fg="#99ffaa"
           />
           <Experience
-            title="First Place"
+            title="Award Winning"
             desc="In the Student Television Network Spring Nationals 2024 competition, I represented my school and won first place in the Commercial category."
             img="/trophy.svg"
             bg="#bb8800"
