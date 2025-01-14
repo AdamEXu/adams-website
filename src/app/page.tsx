@@ -12,7 +12,6 @@ import {
 } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import PageTransition from "@/components/PageTransition";
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -54,7 +53,7 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  const lenis = useLenis(() => {});
+  useLenis(() => {});
 
   return (
     <ReactLenis root>
@@ -105,7 +104,7 @@ export default function Home() {
                   fontSize="10"
                   fontWeight="bold"
                 >
-                  Hi, I'm Adam.
+                  Hi, I&apos;m Adam.
                 </motion.text>
               </motion.svg>
             </motion.div>
@@ -126,7 +125,7 @@ export default function Home() {
               Welcome to my website on the world wide web.
             </p>
             <p className="text-xl md:text-3xl font-light py-2">
-              I'm a high schooler based in the Bay Area.
+              I&apos;m a high schooler based in the Bay Area.
             </p>
           </div>
           <span className="block py-4" />
@@ -210,10 +209,6 @@ function Interest(props) {
 
 function ExperienceSection() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-
-  const toggleExpand = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
-  };
 
   return (
     <div className="bg-gray-900 p-10 rounded-3xl mt-10">
