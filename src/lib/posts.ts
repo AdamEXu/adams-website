@@ -7,6 +7,14 @@ import remarkGfm from "remark-gfm";
 
 const postsDirectory = path.join(process.cwd(), "blog_posts");
 
+export interface PostData {
+  slug: string;
+  contentHtml: string;
+  title?: string;
+  date?: string;
+  description?: string;
+}
+
 export function getAllPostSlugs() {
   const fileNames = fs.readdirSync(postsDirectory);
   return fileNames.map((fileName) => {
@@ -18,7 +26,7 @@ export function getAllPostSlugs() {
   });
 }
 
-export async function getPostData(slug: string) {
+export async function getPostData(slug: string): Promise<PostData> {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
 
@@ -35,11 +43,10 @@ export async function getPostData(slug: string) {
   // Combine the data with the id and contentHtml
   return {
     slug,
+    contentHtml,
     title: matterResult.data.title,
     date: matterResult.data.date,
     description: matterResult.data.description,
-    contentHtml,
-    ...matterResult.data,
   };
 }
 

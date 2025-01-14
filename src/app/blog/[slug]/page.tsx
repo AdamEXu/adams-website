@@ -13,15 +13,6 @@ interface PostProps {
   }>;
 }
 
-// Update the interface to match what getPostData actually returns
-interface PostData {
-  slug: string;
-  contentHtml: string;
-  title?: string; // Make these optional for now
-  date?: string; // Make these optional for now
-  description?: string;
-}
-
 export default async function Post(props: PostProps) {
   const params = await props.params;
   const postData = await getPostData(params.slug);
