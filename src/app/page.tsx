@@ -252,8 +252,16 @@ function ExperienceSection() {
   );
 }
 
-function Experience({ title, desc, img, bg, fg }) {
-  const contentRef = useRef(null);
+interface ExperienceProps {
+  title: string;
+  desc: string;
+  img: string;
+  bg: string;
+  fg: string;
+}
+
+function Experience({ title, desc, img, bg, fg }: ExperienceProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const controls = useAnimation();
@@ -279,7 +287,6 @@ function Experience({ title, desc, img, bg, fg }) {
       setIsExpanded(true);
       controls.start({
         height: contentRef.current.scrollHeight + 55,
-        // backgroundColor: adjustBrightness(bg, 20),
       });
     }
   };
