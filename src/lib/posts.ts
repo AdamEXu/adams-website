@@ -15,13 +15,6 @@ export interface PostData {
   description?: string;
 }
 
-export interface PostMetadata {
-  slug: string;
-  title: string;
-  date?: string;
-  description?: string;
-}
-
 export function getAllPostSlugs() {
   const fileNames = fs.readdirSync(postsDirectory);
   return fileNames.map((fileName) => {
@@ -57,7 +50,7 @@ export async function getPostData(slug: string): Promise<PostData> {
   };
 }
 
-export function getAllPosts(): PostMetadata[] {
+export function getAllPosts() {
   const fileNames = fs.readdirSync(postsDirectory);
   const allPostsData = fileNames.map((fileName) => {
     const slug = fileName.replace(/\.md$/, "");
@@ -67,9 +60,7 @@ export function getAllPosts(): PostMetadata[] {
 
     return {
       slug,
-      title: matterResult.data.title,
-      date: matterResult.data.date,
-      description: matterResult.data.description,
+      ...matterResult.data,
     };
   });
 

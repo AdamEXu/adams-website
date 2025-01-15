@@ -8,7 +8,7 @@ export default function Blog() {
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <header className="mb-8">
         <Link href="/" className="text-blue-400 hover:text-blue-300 block mb-8">
-          ← Back to Home
+          ← About Me
         </Link>
         <h1 className="text-4xl font-bold mb-2">My Blog</h1>
       </header>

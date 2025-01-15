@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Hackclub",
+    "url": "https://hackclub.com/",
+    "image": "https://adamxu.net/counterspell/hc-logo.png"
+  },
+  {
+    "name": "Wolfram",
+    "url": "https://www.wolfram.com/",
+    "image": "https://content.wolfram.com/sites/10/2019/04/wolfram-corporate-logo-stacked-med.png"
+  },
+  {
+    "name": "Yubico",
+    "url": "https://www.yubico.com/",
+    "image": "https://adamxu.net/counterspell/yubico-logo-big.png"
+  },
+  {
+    "name": ".xyz",
+    "url": "https://gen.xyz/",
+    "image": "https://adamxu.net/counterspell/xyz-logo-color.png"
+  },
+  {
+    "name": "Interview Cake",
+    "url": "https://www.interviewcake.com/",
+    "image": "https://adamxu.net/counterspell/cake_blue.png"
+  },
+  {
+    "name": "Desmos",
+    "url": "https://desmos.com/",
+    "image": "https://adamxu.net/counterspell/desmos.png"
+  }
+]

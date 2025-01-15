@@ -1,0 +1,82 @@
+[
+  {
+    "time": "10:30 AM",
+    "event": "Doors Open"
+  },
+  {
+    "time": "11:00 AM",
+    "event": "Opening Ceremony"
+  },
+  {
+    "time": "11:45 AM",
+    "event": "Team Formation"
+  },
+  {
+    "time": "12:00 PM",
+    "event": "Brainstorm Lunch"
+  },
+  {
+    "time": "1:00 PM",
+    "event": "Worktime Begins"
+  },
+  {
+    "time": "1:30 PM",
+    "event": "Sponsor Workshop"
+  },
+  {
+    "time": "2:15 PM",
+    "event": "Sponsor Workshop"
+  },
+  {
+    "time": "3:00 PM",
+    "event": "Sprig Workshop"
+  },
+  {
+    "time": "4:00 PM",
+    "event": "Fun Activity"
+  },
+  {
+    "time": "4:30 PM",
+    "event": "Boba Workshop"
+  },
+  {
+    "time": "6:00 PM",
+    "event": "Dinner"
+  },
+  {
+    "time": "7:00 PM",
+    "event": "Fun Activity"
+  },
+  {
+    "time": "8:00 PM",
+    "event": "Lightning Talks"
+  },
+  {
+    "time": "12:00 AM",
+    "event": "Midnight Surprise"
+  },
+  {
+    "time": "8:00 AM",
+    "event": "Breakfast"
+  },
+  {
+    "time": "9:00 AM",
+    "event": "Submissions End"
+  },
+  {
+    "time": "9:40 AM",
+    "event": "Peer Voting"
+  },
+  {
+    "time": "10:00 AM",
+    "event": "Closing Ceremony"
+  },
+  {
+    "time": "10:30 AM",
+    "event": "Shop Time"
+  },
+  {
+    "time": "11:00 AM",
+    "event": "Event Ends"
+  }
+]

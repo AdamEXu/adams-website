@@ -20,7 +20,7 @@ export default async function Post(props: PostProps) {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <Link href="/blog" className="text-blue-400 hover:text-blue-300">
-        ← Back to blog
+        ← All Posts
       </Link>
       <article className="mt-8">
         {postData.title && (

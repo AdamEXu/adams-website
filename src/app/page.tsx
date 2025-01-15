@@ -10,10 +10,13 @@ import {
   AnimatePresence,
   useAnimation,
 } from "motion/react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, createContext } from "react";
 import Link from "next/link";
+import { LenisContext } from "@/context/LenisContext";
+import { easeInOut } from "motion";
 
 export default function Home() {
+  const [lenisInstance, setLenisInstance] = useState(null);
   const containerRef = useRef(null);
   const [showFront, setShowFront] = useState(true);
   const [showNav, setShowNav] = useState(true);
@@ -53,125 +56,193 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  useLenis(() => {});
+  useLenis((lenis) => {
+    setLenisInstance(lenis);
+  });
 
   return (
-    <ReactLenis root>
-      <AnimatePresence>
-        {showNav && (
-          <motion.div
-            className="fixed z-20 top-[60vh] w-screen flex flex-row justify-center gap-8 text-lg"
-            style={{ opacity: navOpacity }}
-            initial={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <span className="cursor-pointer underline underline-offset-2 font-bold">
-              About Me
-            </span>
-            <Link
-              href="/blog"
-              className="opacity-80 hover:opacity-100 hover:scale-110 transition-transform duration-300 ease-in-out cursor-pointer"
-            >
-              Blog
-            </Link>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <div ref={containerRef} className="h-[100vh]">
+    <LenisContext.Provider value={lenisInstance}>
+      <ReactLenis root>
         <AnimatePresence>
-          {showFront && (
+          {showNav && (
             <motion.div
-              id="front"
-              className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 z-10 bg-gray-900"
-              style={{ scale: frontScale, opacity: frontOpacity }}
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              className="fixed z-20 top-[60vh] w-screen flex flex-row justify-center gap-8 text-lg"
+              style={{ opacity: navOpacity }}
+              initial={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
             >
-              <motion.svg
-                width="100%"
-                height="100%"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="xMidYMid meet"
-                style={{ scale: frontScale }}
+              <Link
+                className="cursor-pointer underline underline-offset-2 font-bold"
+                href="#about"
+                onClick={(e) => {
+                  e.preventDefault();
+                  lenisInstance?.scrollTo("#about", {
+                    offset: -50,
+                    duration: 1.5,
+                    easing: easeOut,
+                  });
+                }}
               >
-                <motion.text
-                  x="50"
-                  y="50"
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fill="white"
-                  fontSize="10"
-                  fontWeight="bold"
-                >
-                  Hi, I&apos;m Adam.
-                </motion.text>
-              </motion.svg>
+                About Me
+              </Link>
+              <Link
+                href="/blog"
+                className="opacity-80 hover:opacity-100 hover:scale-110 transition-transform duration-300 ease-in-out cursor-pointer"
+              >
+                Blog
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-      <motion.div
-        id="back"
-        className="w-screen min-h-screen px-8 relative z-0"
-        style={{ opacity: backOpacity }}
-      >
-        <div className="max-w-4xl mx-auto pt-24 px-4">
-          <div className="mx\-8">
-            <p className="text-4xl md:text-6xl font-bold py-6">
-              My name is Adam Xu.
-            </p>
-            <p className="text-xl md:text-3xl font-medium py-2">
-              Welcome to my website on the world wide web.
-            </p>
-            <p className="text-xl md:text-3xl font-light py-2">
-              I&apos;m a high schooler based in the Bay Area.
-            </p>
-          </div>
-          <span className="block py-4" />
-          <div className="bg-gray-900 p-10 rounded-3xl">
-            <h2 className="text-2xl md:text-3xl font-medium">My Interests</h2>
-            <div>
-              <div className="flex flex-col md:flex-row justify-center gap-4">
-                <Interest
-                  title="Programming"
-                  desc="I have been coding for over five years, and I work on a lot of random projects in my free time. "
-                  img="/terminal.svg"
-                  bg="#228833"
-                  fg="#99ffaa"
-                />
-                <Interest
-                  title="Video Production"
-                  desc="My skills mostly fall into video editing, but I also have experience all around the production process."
-                  img="/camera.svg"
-                  bg="#2233aa"
-                  fg="#99bbff"
-                />
-                {/* <Interest
-                  title="Title"
-                  desc="Description text, blah blah blah."
-                  img="/terminal.svg"
-                  bg="#aa2222"
-                  fg="#ffaa99"
-                /> */}
+        <div ref={containerRef} className="h-[100vh]">
+          <AnimatePresence>
+            {showFront && (
+              <motion.div
+                id="front"
+                className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 z-10 bg-gray-900"
+                style={{ scale: frontScale, opacity: frontOpacity }}
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <motion.svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="xMidYMid meet"
+                  style={{ scale: frontScale }}
+                >
+                  <motion.text
+                    x="50"
+                    y="50"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill="white"
+                    fontSize="10"
+                    fontWeight="bold"
+                  >
+                    Hi, I&apos;m Adam.
+                  </motion.text>
+                </motion.svg>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+        <motion.div
+          id="back"
+          className="w-screen min-h-screen px-8 relative z-0"
+          style={{ opacity: backOpacity }}
+        >
+          <div className="max-w-4xl mx-auto pt-24 px-4" id="about">
+            <div className="mx\-8">
+              <p className="text-4xl md:text-6xl font-bold py-6">
+                My name is Adam Xu.
+              </p>
+              <p className="text-xl md:text-3xl font-medium py-2">
+                Welcome to my website on the world wide web.
+              </p>
+              <p className="text-xl md:text-3xl font-light py-2">
+                I&apos;m a high schooler based in the Bay Area.
+              </p>
+            </div>
+            <span className="block py-4" />
+            <div className="bg-gray-900 p-10 rounded-3xl">
+              <h2 className="text-2xl md:text-3xl font-medium">My Interests</h2>
+              <div>
+                <div className="flex flex-col md:flex-row justify-center gap-4">
+                  <Interest
+                    title="Programming"
+                    desc="I have been coding for over five years, and I work on a lot of random projects in my free time. "
+                    img="/terminal.svg"
+                    bg="#228833"
+                    fg="#99ffaa"
+                  />
+                  <Interest
+                    title="Video Production"
+                    desc="My skills mostly fall into video editing, but I also have experience all around the production process."
+                    img="/camera.svg"
+                    bg="#2233aa"
+                    fg="#99bbff"
+                  />
+                  {/* <Interest
+                    title="Title"
+                    desc="Description text, blah blah blah."
+                    img="/terminal.svg"
+                    bg="#aa2222"
+                    fg="#ffaa99"
+                  /> */}
+                </div>
               </div>
             </div>
+            <ExperienceSection />
+            <span className="block py-4" />
+            <div className="bg-gray-900 p-10 mt-2 rounded-3xl">
+              <h2 className="text-2xl md:text-3xl font-medium pb-4">
+                Contact me!
+              </h2>
+              <p>
+                I prefer communication through email. You can email me at{" "}
+                <EmailReveal /> or DM me on Discord at{" "}
+                <span className="font-bold">@thetnter</span>. If none of those
+                work for you, you can try one of my socials below, but I&apos;m
+                not very active on them.
+              </p>
+              <div className="flex flex-row gap-8 mt-8 flex-wrap">
+                <SocialButton
+                  href="https://github.com/AdamEXu"
+                  img="/social-icons/github-mark-white.svg"
+                  title="GitHub"
+                  color="#fff"
+                />
+                <SocialButton
+                  href="https://youtube.com/@thetnter"
+                  img="/social-icons/youtube.svg"
+                  title="YouTube"
+                  color="#ff0000"
+                />
+                <SocialButton
+                  href="https://bsky.app/profile/thetnter.bsky.social"
+                  img="/social-icons/bluesky.svg"
+                  title="Bluesky"
+                  color="#3c84f6"
+                />
+                <SocialButton
+                  href="https://instagram.com/thetnter"
+                  img="/social-icons/instagram.svg"
+                  title="Instagram"
+                  color="#e4405f"
+                />
+                <SocialButton
+                  href="https://www.facebook.com/adam.xu.7587/"
+                  img="/social-icons/facebook.svg"
+                  title="Facebook"
+                  color="#1877f2"
+                />
+                <SocialButton
+                  href="https://reddit.com/user/AdamTheGreat-"
+                  img="/social-icons/reddit.svg"
+                  title="Reddit"
+                  color="#ff4500"
+                />
+                <SocialButton
+                  href="https://linkedin.com/in/adam-xu/"
+                  img="/social-icons/linkedin.svg"
+                  title="LinkedIn"
+                  color="#0077b5"
+                />
+                <SocialButton
+                  href="https://twitter.com/thetnter"
+                  img="/social-icons/X_logo.svg"
+                  title="X (Formerly Twitter)"
+                  color="#1da1f2"
+                />
+              </div>
+            </div>
+            <span className="block py-4" />
           </div>
-          <ExperienceSection />
-          <span className="block py-4" />
-          <div className="bg-gray-900 p-10 rounded-3xl">
-            <h2 className="text-2xl md:text-3xl font-medium pb-4">
-              Contact me!
-            </h2>
-            <p>
-              My email is{" "}
-              <a className="font-bold opacity-70">click to reveal</a>
-            </p>
-          </div>
-          <span className="block py-4" />
-        </div>
-      </motion.div>
-    </ReactLenis>
+        </motion.div>
+      </ReactLenis>
+    </LenisContext.Provider>
   );
 }
 
@@ -359,5 +430,81 @@ function Experience({ title, desc, img, bg, fg }: ExperienceProps) {
         </motion.p>
       </div>
     </motion.div>
+  );
+}
+
+function EmailReveal() {
+  const [email, setEmail] = useState("ocmfaui@abomvr.cwi");
+  const [isBlurred, setIsBlurred] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = async () => {
+    if (!isBlurred) return; // Don't fetch again if already revealed
+
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/email");
+      const data = await response.json();
+      setEmail(data.email);
+      if (!data.email) {
+        setEmail("youre@rate.limited");
+      }
+      setIsBlurred(false);
+    } catch (error) {
+      setEmail("Failed to load email");
+      setIsBlurred(false);
+      // console.error("Failed to fetch email:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <a
+      onClick={handleClick}
+      href={isBlurred ? "#" : `mailto:${email}`}
+      onClick={(e) => {
+        e.preventDefault();
+        handleClick();
+      }}
+      className={`font-bold cursor-pointer
+        ${isBlurred ? "opacity-70 blur-[4px]" : "opacity-100 blur-none"}
+        ${isLoading ? "animate-pulse" : ""}
+        transition-all duration-300`}
+    >
+      {email}
+    </a>
+  );
+}
+
+function SocialButton(props: { href: string; img: string; color: string }) {
+  return (
+    <a
+      href={props.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block w-8 h-8 hover:scale-110 transition-transform duration-300 ease-in-out"
+    >
+      <div
+        className="flex-shrink-0 transition-colors duration-300 hover:cursor-pointer"
+        style={{
+          maskImage: `url(${props.img})`,
+          WebkitMaskImage: `url(${props.img})`,
+          maskSize: "contain",
+          WebkitMaskSize: "contain",
+          maskRepeat: "no-repeat",
+          WebkitMaskRepeat: "no-repeat",
+          backgroundColor: "#fff",
+          width: "40px",
+          aspectRatio: "1 / 1",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = props.color;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = "#fff";
+        }}
+      />
+    </a>
   );
 }
