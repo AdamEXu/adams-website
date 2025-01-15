@@ -35,8 +35,9 @@ export default async function Post(props: PostProps) {
             })}
           </p>
         )}
+        <hr className="border-gray-700 mb-8" />
         <div
-          className="prose prose-invert max-w-none"
+          className="prose prose-invert w-full md:w-[50vw] mx-auto"
           dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
         />
       </article>
