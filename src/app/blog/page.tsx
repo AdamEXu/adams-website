@@ -19,13 +19,15 @@ export default function BlogIndex() {
                 {post.description && (
                   <p className="text-gray-300">{post.description}</p>
                 )}
-                <p className="text-gray-400">
-                  {new Date(post.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
+                {post.date ? (
+                  <p className="text-gray-400">
+                    {new Date(post.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                ) : null}
               </div>
               <div
                 className=""
