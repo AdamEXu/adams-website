@@ -1,20 +1,15 @@
+import { getAllPosts, PostMetadata } from "@/lib/posts";
 import Link from "next/link";
-import { getAllPosts } from "@/lib/posts";
 
-export default function Blog() {
-  const posts = getAllPosts();
+export default function BlogIndex() {
+  const posts: PostMetadata[] = getAllPosts();
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
-      <header className="mb-8">
-        <Link href="/" className="text-blue-400 hover:text-blue-300 block mb-8">
-          ← About Me
-        </Link>
-        <h1 className="text-4xl font-bold mb-2">My Blog</h1>
-      </header>
-      <main>
+      <h1 className="text-4xl font-bold mb-8">Blog Posts</h1>
+      <div>
         {posts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`}>
+          <Link href={`/blog/${post.slug}`} key={post.slug}>
             <div className="mb-8 bg-gray-800 p-4 rounded-lg hover:scale-101 hover:shadow-lg hover:bg-gray-700 transition-all duration-300 ease-in-out flex justify-between items-center gap-4">
               <div>
                 <h2 className="text-2xl font-semibold mb-2">{post.title}</h2>
@@ -49,7 +44,7 @@ export default function Blog() {
             </div>
           </Link>
         ))}
-      </main>
+      </div>
     </div>
   );
 }
