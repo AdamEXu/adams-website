@@ -8,12 +8,12 @@ import {
   easeOut,
   easeIn,
   AnimatePresence,
-  useAnimation,
+  // useAnimation,
 } from "motion/react";
-import { useRef, useState, useEffect, createContext } from "react";
+import { useRef, useState, useEffect /*, createContext*/ } from "react";
 import Link from "next/link";
 import { LenisContext } from "@/context/LenisContext";
-import { easeInOut } from "motion";
+// import { easeInOut } from "motion";
 
 export default function Home() {
   const [lenisInstance, setLenisInstance] = useState(null);
@@ -54,7 +54,7 @@ export default function Home() {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, []);
+  });
 
   useLenis((lenis) => {
     setLenisInstance(lenis);
@@ -453,7 +453,7 @@ function EmailReveal() {
     } catch (error) {
       setEmail("Failed to load email");
       setIsBlurred(false);
-      // console.error("Failed to fetch email:", error);
+      console.error("Failed to fetch email:", error);
     } finally {
       setIsLoading(false);
     }
@@ -461,7 +461,6 @@ function EmailReveal() {
 
   return (
     <a
-      onClick={handleClick}
       href={isBlurred ? "#" : `mailto:${email}`}
       onClick={(e) => {
         e.preventDefault();
