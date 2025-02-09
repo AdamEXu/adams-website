@@ -6,7 +6,10 @@ export default function BlogIndex() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
-      <h1 className="text-4xl font-bold mb-8">Blog Posts</h1>
+      <Link href="/" className="text-blue-400 hover:text-blue-300">
+        ← Home
+      </Link>
+      <h1 className="text-4xl font-bold mb-8 mt-8">Blog Posts</h1>
       <div>
         {posts.map((post) => (
           <Link href={`/blog/${post.slug}`} key={post.slug}>
