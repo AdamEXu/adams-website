@@ -174,7 +174,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <ExperienceSection />
+            {/* <ExperienceSection /> */}
             <span className="block py-4" />
             <div className="bg-gray-900 p-10 mt-2 rounded-3xl">
               <h2 className="text-2xl md:text-3xl font-medium pb-4">
@@ -281,157 +281,157 @@ function Interest(props: InterestProps) {
   );
 }
 
-function ExperienceSection() {
-  return (
-    <div className="bg-gray-900 p-10 rounded-3xl mt-10">
-      <h2 className="text-2xl md:text-3xl font-medium">My Experience</h2>
-      <div className="flex flex-col md:flex-row justify-center gap-4">
-        <div className="pb-4 w-full md:w-1/2">
-          <Experience
-            title="Web Dev"
-            desc="I know plain HTML, CSS, and Javascript, as well as Flask to build backends and NextJS + React + Tailwind to build frontends."
-            img="/safari.svg"
-            bg="#2233aa"
-            fg="#99bbff"
-          />
-          <Experience
-            title="AI"
-            desc="I have worked on creating AI chatbots for different purposes using a variety of techniques such as prompting and RAG."
-            img="/cpu.svg"
-            bg="#aa2222"
-            fg="#ffaa99"
-          />
-        </div>
-        <div className="w-full md:w-1/2">
-          <Experience
-            title="Video Editing"
-            desc="I use Final Cut Pro for most of my editing. I occasionally use Premiere Pro along with After Effects for more complex projects."
-            img="/selection.pin.in.out.svg"
-            bg="#228833"
-            fg="#99ffaa"
-          />
-          <Experience
-            title="Award Winning"
-            desc="In the Student Television Network Spring Nationals 2024 competition, I represented my school and won first place in the Commercial category."
-            img="/trophy.svg"
-            bg="#bb8800"
-            fg="#ffee77"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
+// function ExperienceSection() {
+//   return (
+//     <div className="bg-gray-900 p-10 rounded-3xl mt-10">
+//       <h2 className="text-2xl md:text-3xl font-medium">My Experience</h2>
+//       <div className="flex flex-col md:flex-row justify-center gap-4">
+//         <div className="pb-4 w-full md:w-1/2">
+//           <Experience
+//             title="Web Dev"
+//             desc="I know plain HTML, CSS, and Javascript, as well as Flask to build backends and NextJS + React + Tailwind to build frontends."
+//             img="/safari.svg"
+//             bg="#2233aa"
+//             fg="#99bbff"
+//           />
+//           <Experience
+//             title="AI"
+//             desc="I have worked on creating AI chatbots for different purposes using a variety of techniques such as prompting and RAG."
+//             img="/cpu.svg"
+//             bg="#aa2222"
+//             fg="#ffaa99"
+//           />
+//         </div>
+//         <div className="w-full md:w-1/2">
+//           <Experience
+//             title="Video Editing"
+//             desc="I use Final Cut Pro for most of my editing. I occasionally use Premiere Pro along with After Effects for more complex projects."
+//             img="/selection.pin.in.out.svg"
+//             bg="#228833"
+//             fg="#99ffaa"
+//           />
+//           <Experience
+//             title="Award Winning"
+//             desc="In the Student Television Network Spring Nationals 2024 competition, I represented my school and won first place in the Commercial category."
+//             img="/trophy.svg"
+//             bg="#bb8800"
+//             fg="#ffee77"
+//           />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
-interface ExperienceProps {
-  title: string;
-  desc: string;
-  img: string;
-  bg: string;
-  fg: string;
-}
+// interface ExperienceProps {
+//   title: string;
+//   desc: string;
+//   img: string;
+//   bg: string;
+//   fg: string;
+// }
 
-function Experience({ title, desc, img, bg, fg }: ExperienceProps) {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const controls = useAnimation();
+// function Experience({ title, desc, img, bg, fg }: ExperienceProps) {
+//   const contentRef = useRef<HTMLDivElement>(null);
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [isExpanded, setIsExpanded] = useState(false);
+//   const controls = useAnimation();
 
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-    setIsExpanded(!isOpen);
-    if (!isOpen && contentRef.current) {
-      controls.start({
-        height: contentRef.current.scrollHeight + 60,
-        backgroundColor: adjustBrightness(bg, 20),
-      });
-    } else {
-      controls.start({
-        height: 100,
-        backgroundColor: bg,
-      });
-    }
-  };
+//   const handleClick = () => {
+//     setIsOpen(!isOpen);
+//     setIsExpanded(!isOpen);
+//     if (!isOpen && contentRef.current) {
+//       controls.start({
+//         height: contentRef.current.scrollHeight + 60,
+//         backgroundColor: adjustBrightness(bg, 20),
+//       });
+//     } else {
+//       controls.start({
+//         height: 100,
+//         backgroundColor: bg,
+//       });
+//     }
+//   };
 
-  const handleHoverStart = () => {
-    if (!isOpen && contentRef.current) {
-      setIsExpanded(true);
-      controls.start({
-        height: contentRef.current.scrollHeight + 55,
-      });
-    }
-  };
+//   const handleHoverStart = () => {
+//     if (!isOpen && contentRef.current) {
+//       setIsExpanded(true);
+//       controls.start({
+//         height: contentRef.current.scrollHeight + 55,
+//       });
+//     }
+//   };
 
-  const handleHoverEnd = () => {
-    if (!isOpen) {
-      setIsExpanded(false);
-      controls.start({
-        height: 100,
-        backgroundColor: bg,
-      });
-    }
-  };
+//   const handleHoverEnd = () => {
+//     if (!isOpen) {
+//       setIsExpanded(false);
+//       controls.start({
+//         height: 100,
+//         backgroundColor: bg,
+//       });
+//     }
+//   };
 
-  // Utility function to adjust color brightness
-  const adjustBrightness = (color: string, amount: number) => {
-    const hex = color.replace("#", "");
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
+//   // Utility function to adjust color brightness
+//   const adjustBrightness = (color: string, amount: number) => {
+//     const hex = color.replace("#", "");
+//     const r = parseInt(hex.substr(0, 2), 16);
+//     const g = parseInt(hex.substr(2, 2), 16);
+//     const b = parseInt(hex.substr(4, 2), 16);
 
-    const adjustedR = Math.min(255, Math.max(0, r + amount));
-    const adjustedG = Math.min(255, Math.max(0, g + amount));
-    const adjustedB = Math.min(255, Math.max(0, b + amount));
+//     const adjustedR = Math.min(255, Math.max(0, r + amount));
+//     const adjustedG = Math.min(255, Math.max(0, g + amount));
+//     const adjustedB = Math.min(255, Math.max(0, b + amount));
 
-    return `#${adjustedR.toString(16).padStart(2, "0")}${adjustedG
-      .toString(16)
-      .padStart(2, "0")}${adjustedB.toString(16).padStart(2, "0")}`;
-  };
+//     return `#${adjustedR.toString(16).padStart(2, "0")}${adjustedG
+//       .toString(16)
+//       .padStart(2, "0")}${adjustedB.toString(16).padStart(2, "0")}`;
+//   };
 
-  return (
-    <motion.div
-      className="w-full px-4 py-8 mt-4 rounded-xl overflow-hidden cursor-pointer"
-      style={{ backgroundColor: bg }}
-      animate={controls}
-      initial={{ height: 100 }}
-      onClick={handleClick}
-      onHoverStart={handleHoverStart}
-      onHoverEnd={handleHoverEnd}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-    >
-      <div ref={contentRef}>
-        <div className="flex items-center gap-4 mb-8">
-          <div
-            className="flex-shrink-0"
-            style={{
-              maskImage: `url(${img})`,
-              WebkitMaskImage: `url(${img})`,
-              maskSize: "contain",
-              WebkitMaskSize: "contain",
-              maskRepeat: "no-repeat",
-              WebkitMaskRepeat: "no-repeat",
-              backgroundColor: fg,
-              width: "40px",
-              aspectRatio: "1 / 1",
-            }}
-          />
-          <h2 className="text-xl md:text-3xl font-bold" style={{ color: fg }}>
-            {title}
-          </h2>
-        </div>
-        <motion.p
-          className="text-lg md:text-xl mt-4"
-          style={{ color: "#fff" }}
-          animate={{
-            opacity: isOpen || isExpanded ? 1 : 0.5,
-          }}
-        >
-          {desc}
-        </motion.p>
-      </div>
-    </motion.div>
-  );
-}
+//   return (
+//     <motion.div
+//       className="w-full px-4 py-8 mt-4 rounded-xl overflow-hidden cursor-pointer"
+//       style={{ backgroundColor: bg }}
+//       animate={controls}
+//       initial={{ height: 100 }}
+//       onClick={handleClick}
+//       onHoverStart={handleHoverStart}
+//       onHoverEnd={handleHoverEnd}
+//       transition={{ duration: 0.3, ease: "easeInOut" }}
+//     >
+//       <div ref={contentRef}>
+//         <div className="flex items-center gap-4 mb-8">
+//           <div
+//             className="flex-shrink-0"
+//             style={{
+//               maskImage: `url(${img})`,
+//               WebkitMaskImage: `url(${img})`,
+//               maskSize: "contain",
+//               WebkitMaskSize: "contain",
+//               maskRepeat: "no-repeat",
+//               WebkitMaskRepeat: "no-repeat",
+//               backgroundColor: fg,
+//               width: "40px",
+//               aspectRatio: "1 / 1",
+//             }}
+//           />
+//           <h2 className="text-xl md:text-3xl font-bold" style={{ color: fg }}>
+//             {title}
+//           </h2>
+//         </div>
+//         <motion.p
+//           className="text-lg md:text-xl mt-4"
+//           style={{ color: "#fff" }}
+//           animate={{
+//             opacity: isOpen || isExpanded ? 1 : 0.5,
+//           }}
+//         >
+//           {desc}
+//         </motion.p>
+//       </div>
+//     </motion.div>
+//   );
+// }
 
 function EmailReveal() {
   const [email, setEmail] = useState("ocmfaui@abomvr.cwi");
