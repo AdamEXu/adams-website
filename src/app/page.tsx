@@ -1,5 +1,6 @@
 "use client";
 
+import type Lenis from "lenis";
 import { ReactLenis, useLenis } from "lenis/react";
 import {
   motion,
@@ -16,7 +17,7 @@ import { LenisContext } from "@/context/LenisContext";
 // import { easeInOut } from "motion";
 
 export default function Home() {
-  const [lenisInstance, setLenisInstance] = useState(null);
+  const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
   const containerRef = useRef(null);
   const [showFront, setShowFront] = useState(true);
   const [showNav, setShowNav] = useState(true);
@@ -476,10 +477,17 @@ function EmailReveal() {
   );
 }
 
-function SocialButton(props: { href: string; img: string; color: string }) {
+function SocialButton(props: {
+  href: string;
+  img: string;
+  title: string;
+  color: string;
+}) {
   return (
     <a
       href={props.href}
+      title={props.title}
+      aria-label={props.title}
       target="_blank"
       rel="noopener noreferrer"
       className="block w-8 h-8 hover:scale-110 transition-transform duration-300 ease-in-out"
